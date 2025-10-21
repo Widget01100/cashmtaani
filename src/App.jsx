@@ -1,6 +1,7 @@
 import React from "react";
 import "./styles.css";
-import firebaseConfig from "./firebase";
+import { db, auth } from "./firebase"; // keep this
+import Transactions from "./Transactions"; // 👈 import our new Firestore component
 
 function App() {
   return (
@@ -30,11 +31,8 @@ function App() {
           </div>
         </section>
 
-        <section className="info">
-          <h4>Firebase config</h4>
-          <pre>{JSON.stringify(firebaseConfig, null, 2)}</pre>
-          <p className="small">Fill the real Firebase values in <code>.env</code>.</p>
-        </section>
+        {/* 🔥 Add Transactions section */}
+        <Transactions />
       </main>
 
       <footer>

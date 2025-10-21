@@ -25,3 +25,39 @@ header h1 { margin: 0; font-size: 2rem; color: var(--accent); }
 .small { color: var(--muted); }
 footer { margin-top: 22px; color: var(--muted); text-align: center; }
 pre { white-space: pre-wrap; word-wrap: break-word; font-size: 12px; color: var(--muted); }
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.form input, .form select, .form button {
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+}
+.form button {
+  background: var(--accent);
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+.tx-list {
+  list-style: none;
+  padding: 0;
+}
+.tx-list li {
+  background: #141c2e;
+  margin: 6px 0;
+  padding: 8px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tx-list button {
+  background: transparent;
+  border: none;
+  color: #ff7a00;
+  cursor: pointer;
+}
