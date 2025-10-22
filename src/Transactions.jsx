@@ -1,46 +1,72 @@
 import React, { useEffect, useState } from "react";
-import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
-import { db } from "./firebase";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc,
+  query,
+  where,
+} from "firebase/firestore";
+import { db, auth } from "./firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
 function Transactions() {
   const [transactions, setTransactions] = useState([]);
   const [form, setForm] = useState({ title: "", amount: "", category: "" });
+  const [user, setUser] = useState(null);
 
-  const ref = collection(db, "transactions");
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      if (currentUser) loadTransactions(currentUser.uid);
+      else setTransactions([]);
+    });
+    return unsubscribe;
+  }, []);
 
-  // Fetch transactions from Firestore
-  const loadTransactions = async () => {
-    const snapshot = await getDocs(ref);
+  const loadTransactions = async (uid) => {
+    const ref = collection(db, "transactions");
+    const q = query(ref, where("uid", "==", uid));
+    const snapshot = await getDocs(q);
     setTransactions(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
   };
 
-  // Add new transaction
   const addTransaction = async (e) => {
     e.preventDefault();
+    if (!user) {
+      alert("Please log in first.");
+      return;
+    }
     if (!form.title || !form.amount) return;
-    await addDoc(ref, {
+    await addDoc(collection(db, "transactions"), {
       title: form.title,
       amount: parseFloat(form.amount),
       category: form.category,
       date: new Date().toISOString(),
+      uid: user.uid,
     });
     setForm({ title: "", amount: "", category: "" });
-    loadTransactions();
+    loadTransactions(user.uid);
   };
 
-  // Delete a transaction
   const deleteTransaction = async (id) => {
     await deleteDoc(doc(db, "transactions", id));
-    loadTransactions();
+    if (user) loadTransactions(user.uid);
   };
 
-  useEffect(() => {
-    loadTransactions();
-  }, []);
+  if (!user) {
+    return (
+      <div className="card" style={{ marginTop: "20px" }}>
+        <h3>Transactions</h3>
+        <p>Log in to view or add your transactions.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="card" style={{ marginTop: "20px" }}>
-      <h3>Transactions</h3>
+      <h3>Your Transactions</h3>
       <form onSubmit={addTransaction} className="form">
         <input
           placeholder="Title"

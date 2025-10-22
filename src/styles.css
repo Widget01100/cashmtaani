@@ -61,3 +61,24 @@ pre { white-space: pre-wrap; word-wrap: break-word; font-size: 12px; color: var(
   color: #ff7a00;
   cursor: pointer;
 }
+.login-box {
+  margin-top: 10px;
+  background: #141c2e;
+  padding: 10px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.login-box button {
+  background: var(--accent);
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.login-box img {
+  border-radius: 50%;
+}

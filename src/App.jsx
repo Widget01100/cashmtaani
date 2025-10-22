@@ -2,13 +2,15 @@ import React from "react";
 import "./styles.css";
 import { db, auth } from "./firebase"; // keep this
 import Transactions from "./Transactions"; // 👈 import our new Firestore component
+import Login from "./Login"; // 👈 make sure this is here
 
 function App() {
   return (
     <div className="app">
       <header>
-        <h1>CashMtaani</h1>
-        <p className="tag">Money Moves for Campus Hustlers</p>
+  <h1>CashMtaani</h1>
+  <p className="tag">Money Moves for Campus Hustlers</p>
+  <Login /> {/* 👈 added here */}
       </header>
 
       <main>
