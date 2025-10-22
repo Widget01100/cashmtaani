@@ -3,6 +3,7 @@ import "./styles.css";
 import { db, auth } from "./firebase"; // keep this
 import Transactions from "./Transactions"; // 👈 import our new Firestore component
 import Login from "./Login"; // 👈 make sure this is here
+import Summary from "./Summary";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
 
         {/* 🔥 Add Transactions section */}
         <Transactions />
+        <Summary />
       </main>
 
       <footer>
